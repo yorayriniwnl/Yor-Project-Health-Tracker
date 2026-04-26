@@ -1,0 +1,40 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: gph_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: gph_user
+      POSTGRES_PASSWORD: gph_password
+      POSTGRES_DB: government_project_health
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gph_user -d government_project_health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: ./backend
+    container_name: gph_api
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://gph_user:gph_password@db:5432/government_project_health?schema=public
+      JWT_SECRET: change-me-in-production
+      JWT_REFRESH_SECRET: change-me-too
+      PORT: 4000
+      CORS_ORIGIN: http://localhost:3000
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./backend/uploads:/app/uploads
+    command: sh -c "npx prisma generate && npm run start:prod"
+
+volumes:
+  postgres_data:

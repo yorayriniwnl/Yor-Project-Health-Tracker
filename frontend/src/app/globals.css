@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #f6f9fc;
+  --foreground: #142033;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.gov-card {
+  @apply rounded-2xl border border-slate-200 bg-white shadow-card;
+}
+
+.gov-input {
+  @apply w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm outline-none ring-gov-blue/20 transition focus:border-gov-blue focus:ring-4;
+}
+
+.gov-button {
+  @apply inline-flex items-center justify-center rounded-xl bg-gov-blue px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-gov-navy disabled:cursor-not-allowed disabled:opacity-60;
+}
+
+.gov-button-secondary {
+  @apply inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50;
+}
