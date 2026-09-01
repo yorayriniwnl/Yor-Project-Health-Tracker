@@ -3,8 +3,8 @@ import './globals.css';
 import { QueryProvider } from '@/components/common/QueryProvider';
 
 export const metadata: Metadata = {
-  title: 'Government Project Health Tracker',
-  description: 'Monitor budget, progress, contractors, brokers, maintenance, and project health.'
+  title: 'YOR // Project Health Tracker',
+  description: 'Evidence-led monitoring for project budget, progress, contractors, maintenance, and health.'
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

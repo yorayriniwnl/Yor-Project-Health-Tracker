@@ -24,12 +24,12 @@ export function Sidebar() {
   const visible = items.filter((item) => item.roles.includes(role));
 
   return (
-    <aside className="hidden min-h-screen w-72 flex-col border-r border-slate-200 bg-white lg:flex">
+    <aside className="hidden min-h-screen w-72 flex-col border-r border-slate-200 bg-black lg:flex">
       <div className="flex h-20 items-center gap-3 border-b border-slate-200 px-6">
-        <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gov-blue text-white"><Home className="h-5 w-5" /></div>
+        <div className="flex h-11 w-11 items-center justify-center border border-[#e84b4b] bg-[#671515] text-[#ff8a7f]"><Home className="h-5 w-5" /></div>
         <div>
-          <p className="text-sm font-semibold uppercase tracking-wide text-gov-blue">Government</p>
-          <h1 className="text-base font-bold text-slate-900">Project Health Tracker</h1>
+          <p className="text-sm font-semibold uppercase tracking-[.16em] text-[#ff8a7f]">YOR / FIELD</p>
+          <h1 className="text-base font-medium text-[#f5eaea]">Project Health</h1>
         </div>
       </div>
       <nav className="flex-1 space-y-1 px-4 py-6">
@@ -37,7 +37,7 @@ export function Sidebar() {
           const Icon = item.icon;
           const active = path === item.href || path.startsWith(item.href + '/');
           return (
-            <Link key={item.href} href={item.href} className={cn('flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition', active ? 'bg-gov-mist text-gov-blue' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900')}>
+            <Link key={item.href} href={item.href} className={cn('flex items-center gap-3 border-l-2 px-4 py-3 text-sm font-medium transition', active ? 'border-[#e84b4b] bg-[#671515]/40 text-[#f5eaea]' : 'border-transparent text-slate-600 hover:border-[#ff8a7f] hover:bg-[#671515]/20 hover:text-slate-900')}>
               <Icon className="h-4 w-4" /> {item.label}
             </Link>
           );

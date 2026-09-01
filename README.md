@@ -1,4 +1,18 @@
-# Government Project Health Tracker
+# YOR // Project Health Tracker
+
+> Evidence-led monitoring for public project health, budget, delivery, and accountability.
+
+| Surface | State | Boundary |
+| --- | --- | --- |
+| Frontend dashboard | `DEMO` | Next.js interface for inspecting the workflow and seeded/local data. |
+| Backend API | `EXPERIMENTAL` | NestJS routes require PostgreSQL and configured secrets. |
+| Health-score formula | `VERIFIED` | Deterministic source formula is documented below and reused by backend flows. |
+| Seed dataset | `REPORTED` | Fixtures for development; not a claim about current public projects. |
+| Public portal | `EXPERIMENTAL` | Allow-listed transparency surface; verify authorization and redaction with live data. |
+| Deployment | `UNVERIFIED` | Docker and deployment docs exist; live infrastructure needs an independent probe. |
+| Security/compliance hardening | `PLANNED` | Backups, WAF, retention, consent, and operational review remain release gates. |
+
+The visual source of truth is [`design/yor-tokens.json`](./design/yor-tokens.json). Run `npm run design:check` after changing the frontend shell.
 
 A production-ready full-stack scaffold for monitoring government-funded projects, contractor performance, broker/consultant risk, budget usage, timelines, maintenance cost, audit trails, and automated project health classification.
 

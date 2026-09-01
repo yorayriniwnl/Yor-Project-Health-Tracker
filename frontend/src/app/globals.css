@@ -3,29 +3,79 @@
 @tailwind utilities;
 
 :root {
-  --background: #f6f9fc;
-  --foreground: #142033;
+  --yor-void: #000000;
+  --yor-graphite: #050505;
+  --yor-crimson: #e84b4b;
+  --yor-deep-crimson: #671515;
+  --yor-signal: #ff8a7f;
+  --yor-warm-white: #f5eaea;
+  --yor-muted: #c4c4c4;
+  --yor-field: linear-gradient(135deg, #671515, #8c1616, #2a0505);
+  --background: var(--yor-void);
+  --foreground: var(--yor-warm-white);
 }
 
 * { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body {
   margin: 0;
-  background: var(--background);
-  color: var(--foreground);
+  background-color: var(--yor-void);
+  background-image:
+    linear-gradient(rgba(232,75,75,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232,75,75,.045) 1px, transparent 1px),
+    radial-gradient(circle at 86% 0%, rgba(103,21,21,.3), transparent 36rem);
+  background-size: 32px 32px, 32px 32px, 100% 100%;
+  color: var(--yor-warm-white);
 }
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  opacity: .03;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+}
+a { color: var(--yor-signal); text-underline-offset: 3px; }
+a:hover { color: var(--yor-warm-white); }
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 2px solid var(--yor-signal); outline-offset: 3px; }
 
-.gov-card {
-  @apply rounded-2xl border border-slate-200 bg-white shadow-card;
+.yor-app { background: rgba(0,0,0,.78); }
+.yor-card, .gov-card {
+  border: 1px solid rgba(245,234,234,.16);
+  border-radius: 0;
+  background: linear-gradient(145deg, rgba(5,5,5,.94), rgba(26,5,5,.68));
+  box-shadow: 0 24px 70px rgba(103,21,21,.12);
 }
+.gov-input { width: 100%; border: 1px solid rgba(245,234,234,.22); border-radius: 0; background: #050505; padding: .6rem .75rem; color: var(--yor-warm-white); outline: none; transition: border-color .2s, box-shadow .2s; }
+.gov-input:focus { border-color: var(--yor-signal); box-shadow: 0 0 0 3px rgba(232,75,75,.12); }
+.gov-button { display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--yor-crimson); border-radius: 0; background: var(--yor-crimson); padding: .6rem 1rem; color: #000; font-size: .875rem; font-weight: 700; transition: background-color .2s, transform .2s; }
+.gov-button:hover { background: var(--yor-signal); color: #000; }
+.gov-button:active { transform: translateY(1px); }
+.gov-button-secondary { display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(245,234,234,.25); border-radius: 0; background: transparent; padding: .6rem 1rem; color: var(--yor-warm-white); font-size: .875rem; font-weight: 700; }
+.gov-button-secondary:hover { border-color: var(--yor-signal); background: var(--yor-deep-crimson); }
 
-.gov-input {
-  @apply w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm outline-none ring-gov-blue/20 transition focus:border-gov-blue focus:ring-4;
+.yor-login-rail {
+  background:
+    linear-gradient(140deg, rgba(103,21,21,.94), rgba(5,5,5,.96) 62%),
+    repeating-linear-gradient(90deg, transparent 0 31px, rgba(255,138,127,.08) 32px);
+  border-right: 1px solid rgba(255,138,127,.2);
 }
+.yor-login-mark { border: 1px solid rgba(255,138,127,.35); background: rgba(232,75,75,.18); color: var(--yor-signal); }
+.yor-login-kicker { color: var(--yor-signal); }
+.yor-login-copy { color: var(--yor-warm-white); }
+.yor-login-muted { color: var(--yor-muted); }
+.yor-login-form { border: 1px solid rgba(245,234,234,.2); background: rgba(5,5,5,.92); box-shadow: 0 24px 80px rgba(103,21,21,.2); }
 
-.gov-button {
-  @apply inline-flex items-center justify-center rounded-xl bg-gov-blue px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-gov-navy disabled:cursor-not-allowed disabled:opacity-60;
-}
+/* Translate the existing scaffold utilities into the YOR field. */
+.bg-slate-50, .bg-gray-50 { background-color: #000 !important; }
+.bg-white { background-color: #050505 !important; }
+.text-slate-950, .text-slate-900, .text-slate-800, .text-gray-900 { color: var(--yor-warm-white) !important; }
+.text-slate-700, .text-slate-600, .text-slate-500, .text-gray-500, .text-gray-400 { color: var(--yor-muted) !important; }
+.border-slate-200, .border-slate-300, .border-gray-100 { border-color: rgba(245,234,234,.16) !important; }
+.hover\:bg-slate-50:hover, .hover\:bg-white:hover { background-color: rgba(103,21,21,.34) !important; }
+.bg-gov-blue { background-color: var(--yor-crimson) !important; }
+.text-gov-blue { color: var(--yor-signal) !important; }
+.bg-gov-mist { background-color: rgba(103,21,21,.42) !important; }
 
-.gov-button-secondary {
-  @apply inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50;
-}
+@media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior: auto !important; transition-duration: .001ms !important; animation-duration: .001ms !important; } }

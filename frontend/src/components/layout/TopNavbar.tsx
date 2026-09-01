@@ -7,10 +7,10 @@ import { getStoredUser } from '@/lib/auth';
 export function TopNavbar() {
   const user = getStoredUser();
   return (
-    <header className="sticky top-0 z-20 flex h-20 items-center justify-between border-b border-slate-200 bg-white/90 px-4 backdrop-blur lg:px-8">
+    <header className="sticky top-0 z-20 flex h-20 items-center justify-between border-b border-slate-200 bg-black/90 px-4 backdrop-blur lg:px-8">
       <div>
-        <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Administrative Control Center</p>
-        <h2 className="text-xl font-bold text-slate-900">Government Project Health Tracker</h2>
+        <p className="text-xs font-semibold uppercase tracking-[.16em] text-[#ff8a7f]">YOR // evidence operations</p>
+        <h2 className="text-xl font-medium text-[#f5eaea]">Project Health Tracker</h2>
       </div>
       <div className="hidden flex-1 justify-center px-8 md:flex">
         <div className="flex w-full max-w-md items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-500">
