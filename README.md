@@ -14,7 +14,7 @@
 
 The visual source of truth is [`design/yor-tokens.json`](./design/yor-tokens.json). Run `npm run design:check` after changing the frontend shell.
 
-A production-ready full-stack scaffold for monitoring government-funded projects, contractor performance, broker/consultant risk, budget usage, timelines, maintenance cost, audit trails, and automated project health classification.
+A full-stack reference scaffold for monitoring government-funded projects, contractor performance, broker/consultant risk, budget usage, timelines, maintenance cost, audit trails, and automated project health classification. Production deployment remains gated by the verification and hardening work listed above.
 
 The platform implements role-based access, dashboard analytics, project tracking, health-score logic, reports, public transparency portal, backend APIs, PostgreSQL schema, Prisma seed data, and deployment documentation.
 
@@ -56,13 +56,7 @@ npm run start:dev
 
 Backend runs on `http://localhost:4000/api`.
 
-Default seeded login:
-
-```text
-Email: admin@govtrack.local
-Password: Admin@1234
-Role: SUPER_ADMIN
-```
+Local seed credentials are defined for development only. They must never be reused in a public deployment; production startup should use environment-managed secrets and a separately provisioned administrator.
 
 ### 3. Frontend
 
