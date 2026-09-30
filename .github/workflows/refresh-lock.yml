@@ -13,7 +13,7 @@ permissions:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
@@ -22,19 +22,25 @@ jobs:
         with:
           node-version: "22"
           cache: npm
-      - name: Refresh patched versions within declared ranges
-        run: npm audit fix --package-lock-only
-      - name: Verify high-severity production audit
+      - name: Apply available security updates
+        run: npm audit fix --force
+      - name: Verify production dependency audit
         run: npm audit --omit=dev --audit-level=high
-      - name: Commit refreshed lockfile
+      - name: Verify design contract
+        run: npm run design:check
+      - name: Verify typecheck
+        run: npm run typecheck
+      - name: Verify build
+        run: npm run build
+      - name: Commit validated dependency updates
         shell: bash
         run: |
-          if git diff --quiet -- package-lock.json; then
-            echo "No lockfile update required"
+          if git diff --quiet -- package.json package-lock.json frontend/package.json backend/package.json; then
+            echo "No dependency update required"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add package-lock.json
-          git commit -m "deps: refresh patched dependency lock"
+          git add package.json package-lock.json frontend/package.json backend/package.json
+          git commit -m "deps: apply validated security updates"
           git push origin HEAD:fix/credibility-ci-20260930
