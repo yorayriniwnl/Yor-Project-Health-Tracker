@@ -13,7 +13,7 @@ permissions:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
@@ -22,8 +22,10 @@ jobs:
         with:
           node-version: "22"
           cache: npm
-      - name: Apply available security updates
-        run: npm audit fix --force
+      - name: Regenerate dependency lock
+        run: npm install --package-lock-only
+      - name: Install validated dependency tree
+        run: npm ci
       - name: Verify production dependency audit
         run: npm audit --omit=dev --audit-level=high
       - name: Verify design contract
