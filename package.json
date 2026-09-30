@@ -2,7 +2,10 @@
   "name": "government-project-health-tracker",
   "private": true,
   "version": "1.0.0",
-  "workspaces": ["frontend", "backend"],
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
   "scripts": {
     "design:check": "node scripts/check-design.mjs",
     "dev": "concurrently -n backend,frontend -c cyan,green \"npm run dev:backend\" \"npm run dev:frontend\"",
@@ -15,11 +18,10 @@
     "concurrently": "^9.2.1"
   },
   "overrides": {
-    "next": {
-      ".": "$next",
-      "postcss": "8.5.10"
-    },
-    "postcss": "8.5.10",
+    "next": "16.3.7",
+    "axios": "1.20.0",
+    "multer": "2.4.0",
+    "postcss": "8.5.28",
     "webpack": "5.106.2"
   }
 }
