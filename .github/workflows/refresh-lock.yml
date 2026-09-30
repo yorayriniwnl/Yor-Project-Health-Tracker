@@ -6,6 +6,9 @@ on:
       - fix/credibility-ci-20260930
     paths:
       - ".github/workflows/refresh-lock.yml"
+      - "package.json"
+      - "frontend/package.json"
+      - "backend/package.json"
 
 permissions:
   contents: write
