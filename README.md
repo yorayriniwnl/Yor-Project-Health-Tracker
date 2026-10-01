@@ -36,7 +36,9 @@ government-project-health-tracker/
 
 ## Quick start
 
-### 1. Start PostgreSQL
+### 1. Configure local secrets and start PostgreSQL
+
+Before using Docker Compose, define `JWT_SECRET` and `JWT_REFRESH_SECRET` in your shell or a root-level local `.env` file. Do not commit that file.
 
 ```bash
 docker compose up -d db
@@ -50,13 +52,21 @@ cp .env.example .env
 npm install
 npx prisma generate
 npx prisma migrate dev --name init
+
+# Set a unique local password before seeding.
+# PowerShell:
+$env:SEED_DEMO_PASSWORD="choose-a-unique-local-password"
 npm run seed
+
+# bash/zsh:
+# SEED_DEMO_PASSWORD="choose-a-unique-local-password" npm run seed
+
 npm run start:dev
 ```
 
 Backend runs on `http://localhost:4000/api`.
 
-Local seed credentials are defined for development only. They must never be reused in a public deployment; production startup should use environment-managed secrets and a separately provisioned administrator.
+Seed accounts are synthetic development fixtures. The seed script requires `SEED_DEMO_PASSWORD` with at least 12 characters and refuses to run when `NODE_ENV=production` unless `ALLOW_DEMO_SEED=1` is explicitly supplied for an isolated demo environment. The login client contains no embedded password. Production should use environment-managed secrets and a separately provisioned administrator.
 
 ### 3. Frontend
 
