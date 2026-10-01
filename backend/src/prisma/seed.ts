@@ -4,7 +4,22 @@ import { calculateProjectHealth } from '../common/utils/health-score';
 
 const prisma = new PrismaClient();
 
+function demoSeedPassword(): string {
+  const isProduction = process.env.NODE_ENV === 'production';
+  const allowProductionSeed = process.env.ALLOW_DEMO_SEED === '1';
+  const password = process.env.SEED_DEMO_PASSWORD?.trim();
+
+  if (isProduction && !allowProductionSeed) {
+    throw new Error('Refusing to seed demo accounts in production. Set ALLOW_DEMO_SEED=1 only for an explicitly isolated demo environment.');
+  }
+  if (!password || password.length < 12) {
+    throw new Error('SEED_DEMO_PASSWORD must be set to at least 12 characters before running the demo seed.');
+  }
+  return password;
+}
+
 async function main() {
+  const seedPassword = demoSeedPassword();
   await prisma.auditLog.deleteMany();
   await prisma.projectRisk.deleteMany();
   await prisma.projectDocument.deleteMany();
@@ -19,10 +34,10 @@ async function main() {
   const healthDept = await prisma.department.create({ data: { name: 'Department of Health', ministryName: 'Ministry of Health', region: 'Bihar' } });
   const roadsDept = await prisma.department.create({ data: { name: 'Public Works Department', ministryName: 'Ministry of Roads', region: 'Assam' } });
 
-  const admin = await prisma.user.create({ data: { fullName: 'Super Admin', email: 'admin@govtrack.local', passwordHash: await bcrypt.hash('Admin@1234', 12), role: Role.SUPER_ADMIN, departmentId: healthDept.id } });
-  await prisma.user.create({ data: { fullName: 'Government Admin Health', email: 'health.admin@govtrack.local', passwordHash: await bcrypt.hash('Admin@1234', 12), role: Role.GOVERNMENT_ADMIN, departmentId: healthDept.id } });
-  await prisma.user.create({ data: { fullName: 'Project Manager Roads', email: 'pm.roads@govtrack.local', passwordHash: await bcrypt.hash('Admin@1234', 12), role: Role.PROJECT_MANAGER, departmentId: roadsDept.id } });
-  await prisma.user.create({ data: { fullName: 'State Auditor', email: 'auditor@govtrack.local', passwordHash: await bcrypt.hash('Admin@1234', 12), role: Role.AUDITOR } });
+  const admin = await prisma.user.create({ data: { fullName: 'Super Admin', email: 'admin@govtrack.local', passwordHash: await bcrypt.hash(seedPassword, 12), role: Role.SUPER_ADMIN, departmentId: healthDept.id } });
+  await prisma.user.create({ data: { fullName: 'Government Admin Health', email: 'health.admin@govtrack.local', passwordHash: await bcrypt.hash(seedPassword, 12), role: Role.GOVERNMENT_ADMIN, departmentId: healthDept.id } });
+  await prisma.user.create({ data: { fullName: 'Project Manager Roads', email: 'pm.roads@govtrack.local', passwordHash: await bcrypt.hash(seedPassword, 12), role: Role.PROJECT_MANAGER, departmentId: roadsDept.id } });
+  await prisma.user.create({ data: { fullName: 'State Auditor', email: 'auditor@govtrack.local', passwordHash: await bcrypt.hash(seedPassword, 12), role: Role.AUDITOR } });
 
   const contractor = await prisma.contractor.create({ data: { contractorName: 'BuildWell Infrastructure Ltd.', companyName: 'BuildWell Infrastructure Ltd.', registrationNumber: 'BW-IND-2009', yearsExperience: 12, pastProjectsHandled: 45, totalProjectsDelivered: 38, completedOnTime: 31, completedWithinBudget: 33, successRate: 84.44, qualityRating: 4.2, blacklisted: false, disputeHistory: 'No active disputes' } });
   const contractor2 = await prisma.contractor.create({ data: { contractorName: 'RoadCraft EPC Pvt. Ltd.', companyName: 'RoadCraft EPC Pvt. Ltd.', registrationNumber: 'RC-EPC-2014', yearsExperience: 9, pastProjectsHandled: 28, totalProjectsDelivered: 21, completedOnTime: 14, completedWithinBudget: 16, successRate: 75, qualityRating: 3.8, blacklisted: false, disputeHistory: 'One resolved arbitration' } });
@@ -45,7 +60,7 @@ async function main() {
   await prisma.maintenanceRecord.create({ data: { projectId: project.id, maintenanceType: 'PREVENTIVE', expectedCost: 20000000, actualCost: 0, vendorName: 'MediMaint Services', nextDueDate: new Date('2027-01-30'), riskLevel: RiskLevel.LOW, remarks: 'First-year maintenance planned after commissioning' } });
   await prisma.projectRisk.create({ data: { projectId: project2.id, riskTitle: 'Budget burn rate high', riskDescription: 'Budget usage is ahead of physical progress and broker compliance is under review.', riskLevel: RiskLevel.HIGH, reportedById: admin.id, status: 'OPEN' } });
 
-  console.log('Seed complete. Login with admin@govtrack.local / Admin@1234');
+  console.log('Seed complete. Demo administrator: admin@govtrack.local (password supplied through SEED_DEMO_PASSWORD).');
 }
 
 main().finally(async () => prisma.$disconnect());
