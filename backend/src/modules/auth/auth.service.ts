@@ -49,7 +49,7 @@ export class AuthService {
     const refreshExpiresIn = this.config.get<JwtSignOptions['expiresIn']>('JWT_REFRESH_EXPIRES_IN') ?? '7d';
     return {
       accessToken: this.jwt.sign(payload, { expiresIn: accessExpiresIn }),
-      refreshToken: this.jwt.sign(payload, { secret: this.config.get<string>('JWT_REFRESH_SECRET') ?? 'dev-refresh-secret', expiresIn: refreshExpiresIn })
+      refreshToken: this.jwt.sign(payload, { secret: this.config.getOrThrow<string>('JWT_REFRESH_SECRET'), expiresIn: refreshExpiresIn })
     };
   }
 }
