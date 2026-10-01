@@ -26,8 +26,8 @@ services:
         condition: service_healthy
     environment:
       DATABASE_URL: postgresql://gph_user:gph_password@db:5432/government_project_health?schema=public
-      JWT_SECRET: change-me-in-production
-      JWT_REFRESH_SECRET: change-me-too
+      JWT_SECRET: "${JWT_SECRET:?Set JWT_SECRET in the root .env file}"
+      JWT_REFRESH_SECRET: "${JWT_REFRESH_SECRET:?Set JWT_REFRESH_SECRET in the root .env file}"
       PORT: 4000
       CORS_ORIGIN: http://localhost:3000
     ports:
