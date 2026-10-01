@@ -28,3 +28,12 @@ jobs:
         run: npm run typecheck
       - name: Build
         run: npm run build
+      - name: Credential and Compose boundary
+        shell: bash
+        run: |
+          if grep -R --line-number --fixed-strings 'Admin@1234' backend/src frontend/src; then
+            echo "Embedded demo credential detected"
+            exit 1
+          fi
+          grep -q 'SEED_DEMO_PASSWORD' backend/src/prisma/seed.ts
+          JWT_SECRET='ci-access-secret-only' JWT_REFRESH_SECRET='ci-refresh-secret-only' docker compose config >/dev/null
