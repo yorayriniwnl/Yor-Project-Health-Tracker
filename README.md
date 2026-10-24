@@ -28,6 +28,23 @@ A full-stack reference scaffold for monitoring government-funded projects, contr
 
 The platform implements role-based access, dashboard analytics, project tracking, health-score logic, reports, public transparency portal, backend APIs, PostgreSQL schema, Prisma seed data, and deployment documentation.
 
+<!-- YOR REDLINE / EXPERIENCE V2 -->
+
+<a id="system-map"></a>
+## System map
+
+<div align="center"><picture><source media="(max-width: 600px)" srcset="docs/yor-redline-system-mobile.svg"/><img src="docs/yor-redline-system.svg" width="100%" alt="Project delivery health: Load project data to Score indicators to View dashboards to Investigate delivery"/></picture></div>
+
+| Project signal | Documented scope |
+| :--- | :--- |
+| **Current maturity** | DEMO / EXPERIMENTAL |
+| **Technical focus** | Next.js monitoring interface, NestJS API, PostgreSQL, and a documented health score. |
+| **Evidence boundary** | Seed records are demonstration data; backend setup and production secrets remain separate. |
+
+**Navigate:** [Stack](#stack) · [Apps](#apps) · [Quick start](#quick-start) · [Core features](#core-features) · [Health scoring summary](#health-scoring-summary) · [Production notes](#production-notes)
+
+<!-- END YOR REDLINE / EXPERIENCE V2 -->
+
 ## Stack
 
 - Frontend: Next.js, React, TypeScript, Tailwind CSS, Recharts, React Hook Form, Zod
